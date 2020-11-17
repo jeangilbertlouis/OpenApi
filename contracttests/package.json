@@ -1,0 +1,23 @@
+{
+  "name": "contracttests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "chai": "^4.2.0",
+    "chai-openapi-response-validator": "^0.9.2",
+    "jest": "^26.0.1"
+  },
+  "dependencies": {
+    "js-base64": "^2.6.1"
+  }
+}

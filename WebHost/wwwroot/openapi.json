@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost:44316/"
+      "url": "https://localhost"
     }
   ],
   "tags": [
