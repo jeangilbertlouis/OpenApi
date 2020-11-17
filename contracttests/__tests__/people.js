@@ -6,6 +6,9 @@ const chaiResponseValidator = require('chai-openapi-response-validator');
 describe(`Ensure Open API Spec is satisfied`, function () {
   beforeAll(async () => {
     chai.use(chaiResponseValidator('C:/Dev3/OpenApi/WebHost/wwwroot/openapi.json'));
+    //OR
+    //spec = await axios.get(`http://localhost:11765/openapi.json`);
+    //chai.use(chaiResponseValidator(spec.data));
   });
 
   it('People Endpoint', async function () {
