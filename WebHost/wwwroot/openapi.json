@@ -1,0 +1,134 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "People API",
+    "description": "Example",
+    "version": "v1",
+    "contact": {
+      "name": "Jean",
+      "email": "haha@hotmail.com",
+      "url": "https://github.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://localhost:44316/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "People API",
+      "description": "Demo"
+    }
+  ],
+  "paths": {
+    "/people": {
+      "get": {
+        "tags": [
+          "People"
+        ],
+        "parameters": [],
+        "description": "Get a list of ids for People",
+        "operationId": "GetPeople",
+        "responses": {
+          "200": {
+            "description": "List of person ids",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PersonItemDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/people/{id}": {
+      "get": {
+        "tags": [
+          "People"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the person",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "A person object",
+        "operationId": "GetPerson",
+        "responses": {
+          "200": {
+            "description": "Person Object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Person not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PersonItemDto": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id for a specified person"
+          }
+        }
+      },
+      "PersonDto": {
+        "type": "object",
+        "required": [
+          "id",
+          "firstName",
+          "lastName"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First Name"
+          },
+          "middleName": {
+            "type": "string",
+            "description": "Middle Name, Optional"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last Name"
+          }
+        }
+      }
+    }
+  }
+}
