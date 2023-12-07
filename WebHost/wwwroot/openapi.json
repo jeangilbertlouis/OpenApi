@@ -22,34 +22,6 @@
     }
   ],
   "paths": {
-    "/people": {
-      "get": {
-        "tags": [
-          "People"
-        ],
-        "parameters": [],
-        "description": "Get a list of ids for People",
-        "operationId": "GetPeople",
-        "responses": {
-          "200": {
-            "description": "List of person ids",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PersonItemDto"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/people/{id}": {
       "get": {
         "tags": [
@@ -74,7 +46,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PersonDto"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/EmployedPerson"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnemployedPerson"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                      "Employed": "#/components/schemas/EmployedPerson",
+                      "Unemployed": "#/components/schemas/UnemployedPerson"
+                    }
+                  }
                 }
               }
             }
@@ -91,24 +77,14 @@
   },
   "components": {
     "schemas": {
-      "PersonItemDto": {
-        "type": "object",
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique id for a specified person"
-          }
-        }
-      },
-      "PersonDto": {
+      "EmployedPerson": {
         "type": "object",
         "required": [
           "id",
           "firstName",
-          "lastName"
+          "lastName",
+          "type",
+          "jobTitle"
         ],
         "properties": {
           "id": {
@@ -119,13 +95,54 @@
             "type": "string",
             "description": "First Name"
           },
-          "middleName": {
+          "lastName": {
             "type": "string",
-            "description": "Middle Name, Optional"
+            "description": "Last Name"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of person",
+            "enum": [
+              "Employed"
+            ]
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "Job title"
+          }
+        }
+      },
+      "UnemployedPerson": {
+        "type": "object",
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First Name"
           },
           "lastName": {
             "type": "string",
             "description": "Last Name"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of person",
+            "enum": [
+              "Unemployed"
+            ]
+          },
+          "since": {
+            "type": "string",
+            "description": "Date since unemployed"
           }
         }
       }
